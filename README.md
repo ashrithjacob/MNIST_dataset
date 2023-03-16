@@ -1,4 +1,4 @@
-### MNIST_dataset_project
+# MNIST_dataset_project
 
 Digit recognition projects on the MNIST dataset
 The MNIST dataset contains numbers from 0-9 in freehand writing.
@@ -8,7 +8,7 @@ We shall explore some simple neural nets through this dataset and implement our 
 Input Data-
 Unlike RGB images which have 3 channels, MNIST has only 1 channel, a greyscale channel.
 
-#### Network Architecture:
+## Network Architecture:
 In this project we use 2 hidden layers and an output softmax layer containing 10 nodes.
 We use an input layer containing a single channel from the greyscale image(0-255)
 here's a heuristic of the Network used:
@@ -17,4 +17,12 @@ here's a heuristic of the Network used:
 For the loss function, we use a negative likelihood loss function and for the gradient descent a SGD is used.
 
 
-
+## Implementing in C++
+run cmake in `c++/build/` directory:
+```
+cmake ..
+```
+then run:
+```
+make
+```

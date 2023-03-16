@@ -1,3 +1,0 @@
-/home/ashrith/github/MNIST_dataset/c++/build/CMakeFiles/ANN.dir
-/home/ashrith/github/MNIST_dataset/c++/build/CMakeFiles/edit_cache.dir
-/home/ashrith/github/MNIST_dataset/c++/build/CMakeFiles/rebuild_cache.dir
