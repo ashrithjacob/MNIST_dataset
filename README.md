@@ -26,3 +26,4 @@ then run:
 ```
 make
 ```
+[This implementation seems clunky where we need a cmake file followed by make,see:https://github.com/tsoding/nobuild]
