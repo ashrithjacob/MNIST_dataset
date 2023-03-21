@@ -7,5 +7,8 @@ class NN():
     def activation_fn(self):
     def model(self):
     #TODO
-    #weights
-    #hyperparams
+    # Weights initialisation
+    # Forward prop
+    # Backward prop
+    # Updating weights via SGD
+    # Hyperparam setting/tuning
