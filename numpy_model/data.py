@@ -37,15 +37,20 @@ class Data:
         self.x = (self.x - self.norm[0]) / self.norm[1]
 
     def get_minibatch(self):
+        status = True
         start = self.batch_index * self.batch_size
         if start + self.batch_size > self.x.shape[0]:
             end = self.x.shape()[0]
         else:
             end = start + self.batch_size
+        self.batch_size += 1
+        if end == self.x.shape()[0]:
+            status = False
         return {
             "x": self.x[start:end, :],
             "y": self.y[start:end],
             "size": end - start,
+            "status": status
         }  # returning minibatch and size
 
     def render(self, data):

@@ -6,7 +6,7 @@ class Layer:
     def __init_(self, in_size, out_size, activation="relu"):
         stdv = 1.0 / math.sqrt(in_size)
         # Initialising weights for layer
-        self.W = np.random.uniform(-stdv, stdv, size=(out_size, in_size))
+        self.W_t = np.random.uniform(-stdv, stdv, size=(out_size, in_size))
         self.B = np.random.uniform(-stdv, stdv, size=(1, out_size))
         self.activation = activation
         self.fn = {
@@ -38,7 +38,7 @@ class Layer:
         return 1.0 - self.softmax(x)
 
     def forward(self, a_in):
-        z_out = np.matmul(a_in, np.transpose(self.W)) + self.B
+        z_out = np.matmul(a_in, self.W_t) + self.B
         a_out = self.fn[self.activation]["normal"](z_out)
         return {"a": a_out, "z": z_out}
 
@@ -46,5 +46,5 @@ class Layer:
         dz = self.fn[self.activation]["der"](z_in) * da
         dW_t = (1.0 / m) * np.matmul(np.transpose(a_in), dz)
         dB = (1.0 / m) * np.sum(dz, axis=0, keepdims=True)
-        da_out = np.matmul(dz, self.W)
+        da_out = np.matmul(dz, np.transpose(self.W_t))
         return {"da": da_out, "dW_t": dW_t, "dB": dB}

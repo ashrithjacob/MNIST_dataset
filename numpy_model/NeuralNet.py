@@ -1,90 +1,92 @@
 import numpy as np
 import math
+from .Layer import Layer
 
 
 class NeuralNet:
     def __init__(self, layers, lr=0.003, mom=0.9):
-        self.layers = layers
+        self.layers_size = layers
         self.lr = lr
         self.mom = mom
-        self.num_layers = len(self.layers)-1
-        self.classes = self.layers[self.num_layers]
+        self.num_layers = len(self.layers_size) - 1
+        self.classes = self.layers_size[self.num_layers]
+        self.fn = []
+        self.layers = []
+        self.W_buf = []
+        self.B_buf = []
+        self._init_layers()
+        # assert (self.classes == y.max()+1)
 
-    def step(self, input_vals, predicted_vals):
-        m = input_vals.shape[0]
-        self.forward(input_vals)  # creating forward
-        self.backward(m, predicted_vals)  # finding d_params
-        self.sgd()  # updating params
-
-    def sgd(self):
-        for i in range(self.num_layers - 1):
-            if self.buf_dW_T[i] is None:
-                self.buf_dW_T[i] = self.dW_T[i]
+    # initialise layer objects and buffers(each layer is object)
+    def _init_layers(self):
+        for i in range(self.num_layers):
+            if i == self.num_layers - 1:
+                self.fn.append("logsoftmax")
             else:
-                self.buf_dW_T[i] *= self.mom + self.dW_T[i]
-            if self.buf_dB[i] is None:
-                self.buf_dB[i] = self.dB[i]
+                self.fn.append("relu")
+            l = Layer(
+                self.layers_size[i], self.layers_size[i + 1], activation=self.fn[i]
+            )
+            self.layers.append(l)
+            self.B_buf.append(None)
+            self.W_buf.append(None)
+
+    def run(self, data_obj):
+        loss_epoch = 0
+        num_batch = 0
+        mini_batch = data_obj.get_minibatch()
+        while mini_batch["status"]:
+            loss_batch = self.step(mini_batch["x"], mini_batch["y"], mini_batch["size"])
+            mini_batch = data_obj.get_minibatch()
+            loss_epoch += loss_batch
+            num_batch += 1
+        # loss for full batch
+        loss_epoch = loss_epoch/num_batch
+        return loss_epoch
+
+    def step(self, x_batch, y_batch, m):  # a_in is x_batch
+        a = []
+        z = []
+        dW_t = []
+        dB = []
+        a.append(x_batch)
+        # forward pass for 1 minibatch
+        for count, l in enumerate(self.layers):
+            cache = l.forward(a[count])
+            a.append(cache["a"])
+            z.append(cache["z"])
+        # calculating da[3]
+            da = (-1.0 / m) * self.one_hot(y_batch)
+        # backward pass for 1 minibatch
+        for count, l in reversed(enumerate(self.layers)):
+            grad = l.backward(a[count + 1], z[count], da, m)
+            da = grad["da"]
+            dW_t.append(grad["dW_t"])
+            dB.append(grad["dB_t"])
+        # updating params
+        self.sgd(dW_t, dB)
+        loss = self.loss_fn(a[-1], y_batch, m)
+        return loss
+
+    def sgd(self, dW_t, dB):
+        for count, l in enumerate(self.layers):
+            if self.W_buf[count] is None:
+                self.W_buf[count] = dW_t[count]
             else:
-                self.buf_dB[i] *= self.mom + self.dB[i]
+                self.W_buf[count] *= self.mom + dW_t[count]
+            if self.B_buf[count] is None:
+                self.B_buf[count] = dB[count]
+            else:
+                self.B_buf[count] *= self.mom + dB[count]
+            l.W_t -= self.lr * self.W_buf
+            l.B -= self.lr * self.B_buf
 
-            self.W[i] -= self.lr * self.buf_dW_T[i]
-            self.B[i] -= self.lr * self.buf_dB[i]
+    def loss_fn(self, y_pred,y,m):
+        temp = y_pred*self.one_hot(y)
+        return -1.0*np.sum(temp)/m
+        
+    def one_hot(self, y):
+        temp = np.zeros((y.shape[0],self.classes))
+        temp[np.arange(y.size), y] = 1.0
+        
 
-
-class Layer:
-    def __init_(self,in_size,out_size, in_a, activation='relu'):
-        stdv = 1.0 / math.sqrt(in_size)
-        #Initialising weights for layer
-        self.W = np.random.uniform(-stdv, stdv, size=(out_size, in_size))
-        self.B = np.random.uniform(-stdv, stdv, size=(1, out_size))
-        self.activation = activation
-        self.in_a = in_a
-        self.fn ={'relu':{'normal':self.relu,'der':self.d_relu},
-                  'softmax':{'normal':self.softmax,'der':self.d_softmax},
-                  'logsoftmax':{'normal':self.logsoftmax, 'der':self.d_logsoftmax}}
-
-    def relu(self,x):
-        x[x<0] = 0.0
-        return x
-
-    def d_relu(self,x):
-        x[x<0] = 0.0
-        x[x>0] = 1.0
-        return x
-
-    def softmax(self,x):
-        omega = np.sum(np.exp(x), axis=1,keepdims=True)
-        return (np.exp(x)/omega)
-    
-    def d_softmax(self,x):
-        return (self.softmax(x)*(1.0-self.softmax(x)))
-    
-    def logsoftmax(self,x):
-        return np.log(self.softmax(x))
-    
-    def d_logsoftmax(self,x):
-        return (1.0-self.softmax(x))
-
-    def forward(self):
-        z_out = np.matmul(self.in_a,np.transpose(self.W)) + self.B
-        a_out = self.fn[self.activation]['normal'](z_out)
-        return {'a':a_out,
-                'z':z_out}
-
-    def backward(self,z_in,da,m):
-        dz = self.fn[self.activation]['der'](z_in)*da
-        dW_t = (1.0/m)*np.matmul(np.transpose(self.in_a),dz)
-        dB = (1.0/m)*np.sum(dz, axis=0, keepdims=True)
-        da_out = np.matmul(dz,self.W)
-        return {'da': da_out,
-                'dW_t':dW_t,
-                'dB':dB}
-
-
-
-
-# TODO
-# debug
-# clean code
-# test
-# write main
