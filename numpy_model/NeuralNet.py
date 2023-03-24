@@ -41,7 +41,7 @@ class NeuralNet:
             loss_epoch += loss_batch
             num_batch += 1
         # loss for full batch
-        loss_epoch = loss_epoch/num_batch
+        loss_epoch = loss_epoch / num_batch
         return loss_epoch
 
     def step(self, x_batch, y_batch, m):  # a_in is x_batch
@@ -55,7 +55,7 @@ class NeuralNet:
             cache = l.forward(a[count])
             a.append(cache["a"])
             z.append(cache["z"])
-        # calculating da[3]
+            # calculating da[3]
             da = (-1.0 / m) * self.one_hot(y_batch)
         # backward pass for 1 minibatch
         for count, l in reversed(enumerate(self.layers)):
@@ -81,12 +81,11 @@ class NeuralNet:
             l.W_t -= self.lr * self.W_buf
             l.B -= self.lr * self.B_buf
 
-    def loss_fn(self, y_pred,y,m):
-        temp = y_pred*self.one_hot(y)
-        return -1.0*np.sum(temp)/m
-        
-    def one_hot(self, y):
-        temp = np.zeros((y.shape[0],self.classes))
-        temp[np.arange(y.size), y] = 1.0
-        
+    def loss_fn(self, y_pred, y, m):
+        temp = y_pred * self.one_hot(y)
+        return -1.0 * np.sum(temp) / m
 
+    def one_hot(self, y):
+        temp = np.zeros((y.shape[0], self.classes))
+        temp[np.arange(y.size), y] = 1.0
+        return temp
