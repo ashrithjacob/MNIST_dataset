@@ -42,8 +42,12 @@ class Layer:
         a_out = self.fn[self.activation]["normal"](z_out)
         return {"a": a_out, "z": z_out}
 
-    def backward(self, a_in, z_in, da, m):
-        dz = self.fn[self.activation]["der"](z_in) * da
+    def backward(self, a_in, z_in, da, m, y_batch = None):
+        if y_batch is not None:
+            dz = self.softmax(z_in) - y_batch
+        else:
+            dz = self.fn[self.activation]["der"](z_in) * da
+        dz = dz / m
         dW_t = (1.0 / m) * np.matmul(np.transpose(a_in), dz)
         dB = (1.0 / m) * np.sum(dz, axis=0, keepdims=True)
         da_out = np.matmul(dz, np.transpose(self.W_t))

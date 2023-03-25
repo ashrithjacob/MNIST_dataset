@@ -14,8 +14,10 @@ from Layer import Layer
 if __name__ == "__main__":
     test = Data(norm=(0.5, 0.5), test=True, batch_size=64)
     train = Data(norm=(0.5, 0.5), train=True, batch_size=64)
-    model = NeuralNet(layers=[784, 128, 64, 10], lr=0.003, mom=0.9)
-    epoch = 10
+    model = NeuralNet(layers=[784, 128, 64, 10], lr=0.3, mom=0.9)
+    epoch = 50
     for e in range(epoch):
         loss = model.run(train)
         print("loss for epoch {} is {}".format(e, loss))
+    accuracy = model.predict(test)
+    print("accuracy is {}".format(accuracy))    
