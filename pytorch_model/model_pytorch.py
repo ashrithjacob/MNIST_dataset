@@ -137,9 +137,11 @@ for e in range(epochs):
         
         #And optimizes its weights here
         optimizer.step()
+
         
         running_loss += loss.item()
     else:
+        print("median",torch.median(model[4].weight.grad))
         print("Epoch {} - Training loss: {}".format(e, running_loss/len(trainloader)))
 print("\nTraining Time (in minutes) =",(time()-time0)/60)
 

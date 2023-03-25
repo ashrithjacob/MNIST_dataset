@@ -40,18 +40,22 @@ class Data:
         status = True
         start = self.batch_index * self.batch_size
         if start + self.batch_size > self.x.shape[0]:
-            end = self.x.shape()[0]
+            end = self.x.shape[0]
         else:
             end = start + self.batch_size
-        self.batch_size += 1
-        if end == self.x.shape()[0]:
+        self.batch_index += 1
+        if end == self.x.shape[0]:
             status = False
         return {
+            "start": start,
             "x": self.x[start:end, :],
             "y": self.y[start:end],
             "size": end - start,
             "status": status
         }  # returning minibatch and size
+    
+    def reset(self):
+        self.batch_index = 0
 
     def render(self, data):
         img = np.reshape(data, (28, 28))
@@ -59,7 +63,7 @@ class Data:
         plt.imshow(img, cmap="gray")
         plt.show()
 
-
+"""
 if __name__ == "__main__":
     ob = Data(norm=(0.5, 0.5), test=True, batch_size=64)
     #ob.display(1)
@@ -74,3 +78,4 @@ if __name__ == "__main__":
     # split train test
     # convert into mini batches
     #
+"""

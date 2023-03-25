@@ -3,10 +3,10 @@ import math
 
 
 class Layer:
-    def __init_(self, in_size, out_size, activation="relu"):
+    def __init__(self, in_size, out_size, activation="relu"):
         stdv = 1.0 / math.sqrt(in_size)
         # Initialising weights for layer
-        self.W_t = np.random.uniform(-stdv, stdv, size=(out_size, in_size))
+        self.W_t = np.random.uniform(-stdv, stdv, size=(in_size, out_size))
         self.B = np.random.uniform(-stdv, stdv, size=(1, out_size))
         self.activation = activation
         self.fn = {
@@ -35,7 +35,7 @@ class Layer:
         return np.log(self.softmax(x))
 
     def d_logsoftmax(self, x):
-        return 1.0 - self.softmax(x)
+        return (1.0 - self.softmax(x))
 
     def forward(self, a_in):
         z_out = np.matmul(a_in, self.W_t) + self.B

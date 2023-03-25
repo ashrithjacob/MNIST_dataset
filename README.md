@@ -12,7 +12,7 @@ Unlike RGB images which have 3 channels, MNIST has only 1 channel, a greyscale c
 In this project we use 2 hidden layers and an output softmax layer containing 10 nodes.
 We use an input layer containing a single channel from the greyscale image(0-255)
 here's a heuristic of the Network used:
-![Digit_rec](https://github.com/ashrithjacob/MNIST_dataset/blob/master/Digit_rec.png?raw=true)
+![Digit_rec](https://github.com/ashrithjacob/MNIST_dataset/blob/master/images/Digit_rec.png?raw=true)
 
 For the loss function, we use a negative likelihood loss function and for the gradient descent a SGD is used.
 
