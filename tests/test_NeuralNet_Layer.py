@@ -38,15 +38,3 @@ def test_one_hot(model_instance):
     x=model_instance.one_hot(np.array([1, 2, 3, 4, 5, 6, 7, 8, 9]))
     assert x.shape == (9, 10)
     assert x[1, 2] == 1
-
-"""
-def test_NeuralNet_step(model_instance):
-    train = Data(norm=(0.5, 0.5), train=True, batch_size=m)
-    loss = model_instance.run(train)
-    assert 
-"""
-"""
-def test_weights(model_instance):
-    for count, l in enumerate(model_instance.layers):
-        assert l.a[i].shape == (m, model.layers[i])
-"""

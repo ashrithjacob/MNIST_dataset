@@ -42,8 +42,9 @@ class Layer:
         a_out = self.fn[self.activation]["normal"](z_out)
         return {"a": a_out, "z": z_out}
 
-    def backward(self, a_in, z_in, da, m, y_batch=None):
-        if y_batch is not None:
+    def backward(self, a_in, z_in, da, m, last_layer=False):
+        y_batch = m * da * -1.0
+        if last_layer:
             dz = self.softmax(z_in) - y_batch
         else:
             dz = self.fn[self.activation]["der"](z_in) * da

@@ -67,12 +67,7 @@ class NeuralNet:
         da = -1.0 * self.one_hot(y_batch) / m
         # backward pass for 1 minibatch
         for count, l in reversed(list(enumerate(self.layers))):
-            if count == 2:
-                grad = l.backward(
-                    a[count], z[count], da, m, y_batch=self.one_hot(y_batch)
-                )
-            else:
-                grad = l.backward(a[count], z[count], da, m)
+            grad = l.backward(a[count], z[count], da, m, last_layer=(count == self.num_layers - 1))
             da = grad["da"]
             dW_t.insert(0, grad["dW_t"])  # change to append in reverse order
             dB.insert(0, grad["dB"])
