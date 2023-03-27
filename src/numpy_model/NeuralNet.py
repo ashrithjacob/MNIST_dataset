@@ -39,8 +39,7 @@ class NeuralNet:
             loss_batch = self.step(
                 mini_batch["x"],
                 mini_batch["y"],
-                mini_batch["size"],
-                data_obj.batch_index,
+                mini_batch["size"]
             )
             mini_batch = data_obj.get_minibatch()
             loss_epoch += loss_batch
@@ -51,7 +50,7 @@ class NeuralNet:
         loss_epoch = loss_epoch / num_batch
         return loss_epoch
 
-    def step(self, x_batch, y_batch, m, index):  # a_in is x_batch
+    def step(self, x_batch, y_batch, m):  # a_in is x_batch
         a = []
         z = []
         a.append(x_batch)

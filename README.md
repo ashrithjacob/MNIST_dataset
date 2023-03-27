@@ -32,8 +32,7 @@ $da_{l+1}$ = $dz_{l+1}$ x $W_{l+1}$ \
 $dz_{l}$ = 1/m * $g^{'}$($z_{l}$) * $da_{l+1}$ \
 $(dw_{l})^{T}$ = 1/m*($(a_{l})^{T}$ x $dz_{l}$) \
 $dB_{l}$ = 1/m*sum($dz_{l}$, axis = 0, keepdims = True)
-
-Where: ' * ' is element wise multiplication and ' x ' is matrix multiplication.
+Where: ' * ' is element wise multiplication and ' x ' is matrix multiplication.\
 
 In the backward pass $dz_{3}$ is calculated using the softmax loss function and the derivative of the softmax function, which is: softmax($z_{3}$) - $y_{true}$
 
@@ -51,8 +50,10 @@ python3 numpy_model/main.py
 The pytorch implementation is much faster than the numpy implementation, as expected:
 |           |       Pytorch     |   Numpy   |
 -----------------|---------------|-----------|
-|   time        |       2.5 min      |  2.9 min     |
-|   accuracy    |       97.5%       |  94%      |
+|   epochs       |       10      |  50       |
+|   time        |       2.5 min      |  2.0 min     |
+|   accuracy    |       97.5%       |  93.5%      |
+
 
 ## Implementing in C++
 run cmake in `c++/build/` directory:
