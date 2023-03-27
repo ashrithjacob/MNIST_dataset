@@ -76,14 +76,6 @@ class NeuralNet:
             da = grad["da"]
             dW_t.insert(0, grad["dW_t"])  # change to append in reverse order
             dB.insert(0, grad["dB"])
-        if index == 937:
-            print("median gradients: ", np.median(dW_t[2]), np.median(dB[2]))
-            print(
-                "median weights: ",
-                np.median(self.layers[2].W_t),
-                np.median(self.layers[2].B),
-            )
-            print("median buffer: ", np.median(self.W_buf[2]), np.median(self.B_buf[2]))
         # updating params
         self.sgd(dW_t, dB)
         loss = self.loss_fn(a[-1], y_batch, m)

@@ -35,14 +35,14 @@ class Layer:
         return np.log(self.softmax(x))
 
     def d_logsoftmax(self, x):
-        return (1.0 - self.softmax(x))
+        return 1.0 - self.softmax(x)
 
     def forward(self, a_in):
         z_out = np.matmul(a_in, self.W_t) + self.B
         a_out = self.fn[self.activation]["normal"](z_out)
         return {"a": a_out, "z": z_out}
 
-    def backward(self, a_in, z_in, da, m, y_batch = None):
+    def backward(self, a_in, z_in, da, m, y_batch=None):
         if y_batch is not None:
             dz = self.softmax(z_in) - y_batch
         else:
