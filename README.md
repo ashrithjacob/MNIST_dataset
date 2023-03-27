@@ -16,12 +16,13 @@ here's a heuristic of the Network used:
 
 For the loss function, we use a negative likelihood loss function and for the gradient descent a SGD is used.
 
+## Forward and Backward Propogation:
 Here are the forward propogation formulae for the layer 'l':\
 $z_{l}$ = $a_{l-1}$ x $W^{T}$ + $B$ \
 $a_{l}$ = $g_{n}$($z_{l}$)
 
 Where: \
-$g_{n}$: activation fucntion for layer $n$
+$g_{n}$: activation function for layer $n$
 dim($z_{l}$) = dim($a_{l}$) = m x ($length_{output}$) \
 dim($W^{T}$) = $length_{output}$ x $length_{input}$ \
 dim($B$) = $length_{output}$
@@ -46,6 +47,12 @@ For numpy implementation (only uses numpy library to build the entire ANN), run:
 ```
 python3 numpy_model/main.py
 ```
+## Comparing the two implementations:
+The pytorch implementation is much faster than the numpy implementation, as expected:
+|           |       Pytorch     |   Numpy   |
+-----------------|---------------|-----------|
+|   time        |       2.5 min      |  2.9 min     |
+|   accuracy    |       97.5%       |  94%      |
 
 ## Implementing in C++
 run cmake in `c++/build/` directory:
