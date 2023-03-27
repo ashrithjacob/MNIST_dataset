@@ -63,19 +63,3 @@ class Data:
         plt.imshow(img, cmap="gray")
         plt.show()
 
-"""
-if __name__ == "__main__":
-    ob = Data(norm=(0.5, 0.5), test=True, batch_size=64)
-    #ob.display(1)
-    batch = ob.get_minibatch()
-    ob.render(batch["x"][43,:])
-    print(batch["y"][43])
-    # print('Dimensions: %s x %s' % (ob.x.shape[0], ob.x.shape[1]))
-    # print('\n1st row', ob.x[0].shape)
-    # ob.display(0)
-    # TODO
-    # normalise data (see how normalise actually works)
-    # split train test
-    # convert into mini batches
-    #
-"""
