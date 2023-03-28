@@ -9,7 +9,6 @@ Created on Sun Feb 27 13:04:39 2022
 
 import numpy as np
 import torch
-import torchvision
 import matplotlib.pyplot as plt
 from time import time
 from torchvision import datasets, transforms
@@ -44,13 +43,13 @@ transform = transforms.Compose(
     ]
 )
 trainset = datasets.MNIST(
-    "/home/ashrith/Personal/Deep learning/Pytorch_projects/Number classifier/Dataset",
+    "./DATA",
     download=True,
     train=True,
     transform=transform,
 )
 valset = datasets.MNIST(
-    "/home/ashrith/Personal/Deep learning/Pytorch_projects/Number classifier/Dataset",
+    "./DATA",
     download=True,
     train=False,
     transform=transform,
@@ -136,9 +135,7 @@ for e in range(epochs):
         # And optimizes its weights here
         optimizer.step()
         running_loss += loss.item()
-    else:
-        print("median", torch.median(model[4].weight.grad))
-        print("Epoch {} - Training loss: {}".format(e, running_loss / len(trainloader)))
+    print("Epoch {} - Training loss: {}".format(e, running_loss / len(trainloader)))
 print("\nTraining Time (in minutes) =", (time() - time0) / 60)
 
 

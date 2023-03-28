@@ -64,8 +64,8 @@ The pytorch implementation is much faster than the numpy implementation, as expe
 |           |       Pytorch     |   Numpy   |
 -----------------|---------------|-----------|
 |   epochs       |       10      |  50       |
-|   time        |       2.5 min      |  2.0 min     |
-|   accuracy    |       97.5%       |  93.5%      |
+|   time        |       2.5 min      |  2.2 min     |
+|   accuracy    |       97.5%       |  94.0%      |
 
 
 ## Implementing in C++

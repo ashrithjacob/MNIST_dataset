@@ -5,11 +5,12 @@ import matplotlib.pyplot as plt
 
 class Data:
     def __init__(self, norm=(0.0, 1.0), train=False, test=False, batch_size=64):
+        dir = "./DATA/MNIST/raw/"
         self.data = {
-            "x_test": "DATA/test-images.idx3-ubyte",
-            "y_test": "DATA/test-labels.idx1-ubyte",
-            "x_train": "DATA/train-images.idx3-ubyte",
-            "y_train": "DATA/train-labels.idx1-ubyte",
+            "x_test": dir + "t10k-images-idx3-ubyte",
+            "y_test": dir + "t10k-labels-idx1-ubyte",
+            "x_train": dir + "train-images-idx3-ubyte",
+            "y_train": dir + "train-labels-idx1-ubyte",
         }
         self.train = train
         self.test = test
