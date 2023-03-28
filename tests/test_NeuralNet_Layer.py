@@ -1,8 +1,8 @@
 import pytest
 import numpy as np
-from numpy_model.NeuralNet import NeuralNet
-from numpy_model.Layer import Layer
-from numpy_model.Data import Data
+from NeuralNet import NeuralNet
+from Layer import Layer
+from Data import Data
 
 layers = [784, 128, 64, 10]
 fn = ["relu", "relu", "logsoftmax"]
