@@ -8,6 +8,15 @@ We shall explore some simple neural nets through this dataset and implement our 
 Input Data-
 Unlike RGB images which have 3 channels, MNIST has only 1 channel, a greyscale channel.
 
+Training Data-
+60000 images
+
+Test Data-
+10000 images
+
+Evaluation Metric-
+Accuracy: The number of correct predictions made by the model divided by the total number of predictions made on the test data
+
 ## Network Architecture:
 In this project we use 2 hidden layers and an output softmax layer containing 10 nodes.
 We use an input layer containing a single channel from the greyscale image(0-255)
