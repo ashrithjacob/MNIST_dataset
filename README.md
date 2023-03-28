@@ -52,12 +52,12 @@ pip install -r requirements.txt
 ```
 For pytorch implementation, run:
 ```
-python3 pytorch_model/main.py
+python3 src/pytorch_model/main.py
 ```
 
 For numpy implementation (only uses numpy library to build the entire ANN), run:
 ```
-python3 numpy_model/main.py
+python3 src/numpy_model/main.py
 ```
 ## Comparing the two implementations:
 The pytorch implementation is much faster than the numpy implementation, as expected:
