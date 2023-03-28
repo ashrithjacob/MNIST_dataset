@@ -37,6 +37,10 @@ Where: ' * ' is element wise multiplication and ' x ' is matrix multiplication.\
 In the backward pass $dz_{3}$ is calculated using the softmax loss function and the derivative of the softmax function, which is: softmax($z_{3}$) - $y_{true}$
 
 ## Implementing in Python:
+Create a virtual environment and install the requirements:
+```
+pip3 install -r requirements.txt
+```
 For pytorch implementation, run:
 ```
 python3 pytorch_model/main.py
