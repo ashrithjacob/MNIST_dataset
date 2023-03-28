@@ -48,7 +48,7 @@ In the backward pass $dz_{3}$ is calculated using the softmax loss function and 
 ## Implementing in Python:
 Create a virtual environment and install the requirements:
 ```
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 ```
 For pytorch implementation, run:
 ```
@@ -64,8 +64,8 @@ The pytorch implementation is much faster than the numpy implementation, as expe
 |           |       Pytorch     |   Numpy   |
 -----------------|---------------|-----------|
 |   epochs       |       10      |  50       |
-|   time        |       2.5 min      |  2.2 min     |
-|   accuracy    |       97.5%       |  94.0%      |
+|   time        |       2.3 min      |  2.2 min     |
+|   accuracy    |       96.7%       |  94.0%      |
 
 
 ## Implementing in C++

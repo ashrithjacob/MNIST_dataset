@@ -64,7 +64,7 @@ valloader = torch.utils.data.DataLoader(valset, batch_size=64, shuffle=True)
 #2. Knowing/undrstanding the datatset
 """
 dataiter = iter(trainloader)
-images, labels = dataiter.next()
+images, labels = next(dataiter)
 
 print(images.shape)
 print(labels.shape)
@@ -120,7 +120,7 @@ print("After backward pass: \n", model[0].weight.grad)
 """
 optimizer = optim.SGD(model.parameters(), lr=0.003, momentum=0.9)
 time0 = time()
-epochs = 15
+epochs = 10
 for e in range(epochs):
     running_loss = 0
     for images, labels in trainloader:
